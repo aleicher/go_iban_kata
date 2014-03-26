@@ -3,7 +3,7 @@ package iban
 type IbanValidator struct {
 }
 
-// The following three functions are kind of unnecessary.
+// The following few functions are kind of unnecessary.
 // because I don't know how to do it for a single byte in Go
 func IsLower(c uint8) bool {
   return (('a' <= c) && (c <= 'z'))
