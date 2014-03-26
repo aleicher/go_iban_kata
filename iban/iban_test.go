@@ -8,6 +8,7 @@ import (
 
 var _ = Describe("IbanValidator", func() {
 	var iban *IbanValidator
+	validIbanFixture := "DE89370400440532013000"
 	BeforeEach(func() {
 		iban = new(IbanValidator)
 	})
