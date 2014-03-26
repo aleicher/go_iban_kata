@@ -1,0 +1,13 @@
+package iban_test
+
+import (
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+
+	"testing"
+)
+
+func TestIban(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Iban Suite")
+}
