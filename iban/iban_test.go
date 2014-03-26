@@ -13,7 +13,7 @@ var _ = Describe("IbanValidator", func() {
 		iban = new(IbanValidator)
 	})
 	Describe("Validation 1: maximum length", func() {
-		tooLongIban := validIbanFixture + "1"
+		tooLongIban := "12345678901234567890123456789012345"
 
 		It("does return true for a valid IBAN", func() {
 			Expect(iban.IsValid(validIbanFixture)).To(Equal(true))
