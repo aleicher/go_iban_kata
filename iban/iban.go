@@ -18,7 +18,9 @@ func IsAlpha(c uint8) bool {
 }
 
 func (iv *IbanValidator) IsValid(s string) (ret bool) {
-  ret = (len(s) <= 34)
-  ret = ret && IsAlpha(s[0]) && IsAlpha(s[1])
-  return ret
+  form_test_1 = (len(s) <= 34)
+  form_test_2 = IsAlpha(s[0]) && IsAlpha(s[1])
+
+  form_test_full = form_test_1 && form_test_2
+  return form_test_full
 }
