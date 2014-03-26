@@ -8,6 +8,7 @@ import (
 
 var _ = Describe("IbanValidator", func() {
 	var iban *IbanValidator
+	shortIban := "123456"
 	longIban := "1234567890123456789012345678901234"
 	tooLongIban := "12345678901234567890123456789012345"
 	BeforeEach(func() {
@@ -15,7 +16,7 @@ var _ = Describe("IbanValidator", func() {
 	})
 	Describe("Validation 1: maximum length", func() {
 		It("does provide a function to check if an IBAN is valid", func() {
-			Expect(iban.IsValid("12345")).To(Equal(true))
+			Expect(iban.IsValid(shortIban)).To(Equal(true))
 		})
 		It("does return true for a IBAN with 34 characters", func() {
 			Expect(iban.IsValid(longIban)).To(Equal(true))
