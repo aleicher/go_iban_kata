@@ -12,6 +12,7 @@ var _ = Describe("IbanValidator", func() {
 	BeforeEach(func() {
 		iban = new(IbanValidator)
 	})
+
 	Describe("Validation 0: valid for valid IBAN :)", func() {
 		It("does return true for a valid IBAN", func() {
 			Expect(iban.IsValid(validIbanFixture)).To(Equal(true))
@@ -50,5 +51,17 @@ var _ = Describe("IbanValidator", func() {
 		It("does return false if position 4 is not a number", func() {
 			Expect(iban.IsValid(posThreeAndFourWrong)).To(Equal(false))
 		})
+	})
+
+	Describe("Validation 4: everything after position 4 is a number", func() {
+		hasOneCharacterAfterPositionFour := "DE8937X400440532013000"
+		hasTwoCharactersAfterPositionFour := "DE8937X40044053201X000"
+		It("does return false if there is a character after position four", func() {
+			Expect(iban.IsValid(hasOneCharacterAfterPositionFour)).To(Equal(false))
+		})
+		It("does return false if there is more than one character after position four", func() {
+			Expect(iban.IsValid(hasTwoCharactersAfterPositionFour)).To(Equal(false))
+		})
+
 	})
 })
