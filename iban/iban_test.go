@@ -13,7 +13,6 @@ var _ = Describe("IbanValidator", func() {
 		iban = new(IbanValidator)
 	})
 	Describe("Validation 1: maximum length", func() {
-		shortIban := "123456"
 		tooLongIban := validIbanFixture + "1"
 
 		It("does return true for a valid IBAN", func() {
