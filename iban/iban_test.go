@@ -13,55 +13,60 @@ var _ = Describe("IbanValidator", func() {
 		iban = new(IbanValidator)
 	})
 
-	Describe("Validation 0: valid for valid IBAN :)", func() {
-		It("does return true for a valid IBAN", func() {
-			Expect(iban.IsValid(validIbanFixture)).To(Equal(true))
+	Context("Validates a valid IBAN", func() {
+		Describe("Validation 0: valid for valid IBAN :)", func() {
+			It("does return true for a valid IBAN", func() {
+				Expect(iban.IsValid(validIbanFixture)).Should(BeTrue())
+			})
 		})
 	})
 
-	Describe("Validation 1: maximum length", func() {
-		tooLongIban := "12345678901234567890123456789012345"
+	Context("Validates the generic form of an IBAN", func() {
+		Describe("Validation 1.1: maximum length", func() {
+			tooLongIban := "12345678901234567890123456789012345"
 
-		It("does return false for an IBAN with more than 34 characters", func() {
-			Expect(iban.IsValid(tooLongIban)).To(Equal(false))
+			It("does return false for an IBAN with more than 34 characters", func() {
+				Expect(iban.IsValid(tooLongIban)).Should(BeFalse())
+			})
+		})
+
+		Describe("Validation 1.2: first two positions are characters", func() {
+			noCharIban := "1234567890123456789012345678901234"
+			oneCharIban := "X234567890123456789012345678901234"
+			It("does return false for an IBAN which starts with numbers", func() {
+				Expect(iban.IsValid(noCharIban)).Should(BeFalse())
+			})
+			It("does return false for an IBAN which starts with one character", func() {
+				Expect(iban.IsValid(oneCharIban)).Should(BeFalse())
+			})
+		})
+
+		Describe("Validation 1.3: positions 3 and 4 are numbers", func() {
+			posThreeWrong := "XXX4567890123456789012345678901234"
+			posFourWrong := "XX3X567890123456789012345678901234"
+			posThreeAndFourWrong := "XXXX567890123456789012345678901234"
+			It("does return false if position 3 is not a number", func() {
+				Expect(iban.IsValid(posThreeWrong)).Should(BeFalse())
+			})
+			It("does return false if position 4 is not a number", func() {
+				Expect(iban.IsValid(posFourWrong)).Should(BeFalse())
+			})
+			It("does return false if position 4 is not a number", func() {
+				Expect(iban.IsValid(posThreeAndFourWrong)).Should(BeFalse())
+			})
+		})
+
+		Describe("Validation 1.4: everything after position 4 is a number", func() {
+			hasOneCharacterAfterPositionFour := "DE8937X400440532013000"
+			hasTwoCharactersAfterPositionFour := "DE8937X40044053201X000"
+			It("does return false if there is a character after position four", func() {
+				Expect(iban.IsValid(hasOneCharacterAfterPositionFour)).Should(BeFalse())
+			})
+			It("does return false if there is more than one character after position four", func() {
+				Expect(iban.IsValid(hasTwoCharactersAfterPositionFour)).Should(BeFalse())
+			})
+
 		})
 	})
 
-	Describe("Validation 2: first two positions are characters", func() {
-		noCharIban := "1234567890123456789012345678901234"
-		oneCharIban := "X234567890123456789012345678901234"
-		It("does return false for an IBAN which starts with numbers", func() {
-			Expect(iban.IsValid(noCharIban)).To(Equal(false))
-		})
-		It("does return false for an IBAN which starts with one character", func() {
-			Expect(iban.IsValid(oneCharIban)).To(Equal(false))
-		})
-	})
-
-	Describe("Validation 3: positions 3 and 4 are numbers", func() {
-		posThreeWrong := "XXX4567890123456789012345678901234"
-		posFourWrong := "XX3X567890123456789012345678901234"
-		posThreeAndFourWrong := "XXXX567890123456789012345678901234"
-		It("does return false if position 3 is not a number", func() {
-			Expect(iban.IsValid(posThreeWrong)).To(Equal(false))
-		})
-		It("does return false if position 4 is not a number", func() {
-			Expect(iban.IsValid(posFourWrong)).To(Equal(false))
-		})
-		It("does return false if position 4 is not a number", func() {
-			Expect(iban.IsValid(posThreeAndFourWrong)).To(Equal(false))
-		})
-	})
-
-	Describe("Validation 4: everything after position 4 is a number", func() {
-		hasOneCharacterAfterPositionFour := "DE8937X400440532013000"
-		hasTwoCharactersAfterPositionFour := "DE8937X40044053201X000"
-		It("does return false if there is a character after position four", func() {
-			Expect(iban.IsValid(hasOneCharacterAfterPositionFour)).To(Equal(false))
-		})
-		It("does return false if there is more than one character after position four", func() {
-			Expect(iban.IsValid(hasTwoCharactersAfterPositionFour)).To(Equal(false))
-		})
-
-	})
 })
