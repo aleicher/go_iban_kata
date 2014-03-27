@@ -9,7 +9,7 @@ import (
 var _ = Describe("IbanValidator", func() {
 	var iban *IbanValidator
 	validIbanFixture := "DE89370400440532013000"
-	validIbanFixtureChecksum := 89
+	validIbanFixtureChecksum := 1
 	BeforeEach(func() {
 		iban = new(IbanValidator)
 	})
