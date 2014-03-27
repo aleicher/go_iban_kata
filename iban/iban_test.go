@@ -9,6 +9,7 @@ import (
 var _ = Describe("IbanValidator", func() {
 	var iban *IbanValidator
 	validIbanFixture := "DE89370400440532013000"
+	validIbanFixtureChecksum := 89
 	BeforeEach(func() {
 		iban = new(IbanValidator)
 	})
@@ -68,5 +69,19 @@ var _ = Describe("IbanValidator", func() {
 
 		})
 	})
+	Context("Validates the checksum", func() {
+		Describe("Validation 2.1: validation of the checksum", func() {
+			It("does return false for an IBAN with wrong checksum", func() {
+				hasInvalidChecksum := "DE89370400440532013001"
+				Expect(iban.IsValid(hasInvalidChecksum)).To(Equal(false))
+			})
+			It("does provide a function to calculate the checksum", func() {
+				Expect(iban.Checksum(validIbanFixture)).To(Equal(validIbanFixtureChecksum))
+			})
+			PIt("does calculate the right checksum for ", func() {
+				//Expect(iban.Checksum())
+			})
 
+		})
+	})
 })
