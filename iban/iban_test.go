@@ -79,15 +79,28 @@ var _ = Describe("IbanValidator", func() {
 	})
 	Context("Validates the checksum", func() {
 		Describe("Validation 2.1: validation of the checksum", func() {
+
 			It("does return false for an IBAN with wrong checksum", func() {
 				hasInvalidChecksum := "DE89370400440532013001"
+				hasInvalidChecksum2 := "DE9999"
+				hasInvalidChecksum3 := "DE999"
 				Expect(iban.IsValid(hasInvalidChecksum)).To(Equal(false))
+				Expect(iban.IsValid(hasInvalidChecksum2)).To(Equal(false))
+				Expect(iban.IsValid(hasInvalidChecksum3)).To(Equal(false))
 			})
-			It("does provide a function to calculate the checksum", func() {
+
+			It("does calculate the right checksum for a German IBAN", func() {
 				Expect(iban.Checksum(validIbanFixture)).To(Equal(validIbanFixtureChecksum))
 			})
-			PIt("does calculate the right checksum for ", func() {
-				//Expect(iban.Checksum())
+			It("does calculate the right checksum for a AD IBAN", func() {
+				ibanAD := "AD1200012030200359100100"
+				ibanADchecksum := 12
+				Expect(iban.Checksum(ibanAD)).To(Equal(ibanADchecksum))
+			})
+			It("does calculate the right checksum for a Czech IBAN", func() {
+				ibanCZ := "IBANCZ6508000000192000145399"
+				ibanCZchecksum := 65
+				Expect(iban.Checksum(ibanCZ)).To(Equal(ibanCZchecksum))
 			})
 
 		})
