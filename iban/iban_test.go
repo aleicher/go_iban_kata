@@ -56,7 +56,7 @@ var _ = Describe("IbanValidator", func() {
 			})
 		})
 
-		Describe("Validation 1.4: everything after position 4 is a number", func() {
+		PDescribe("Validation 1.4: everything after position 4 is a number", func() {
 			hasOneCharacterAfterPositionFour := "DE8937X400440532013000"
 			hasTwoCharactersAfterPositionFour := "DE8937X40044053201X000"
 			It("does return false if there is a character after position four", func() {
