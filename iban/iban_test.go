@@ -94,12 +94,12 @@ var _ = Describe("IbanValidator", func() {
 			})
 			It("does calculate the right checksum for a AD IBAN", func() {
 				ibanAD := "AD1200012030200359100100"
-				ibanADchecksum := 12
+				ibanADchecksum := 1
 				Expect(iban.Checksum(ibanAD)).To(Equal(ibanADchecksum))
 			})
 			It("does calculate the right checksum for a Czech IBAN", func() {
-				ibanCZ := "IBANCZ6508000000192000145399"
-				ibanCZchecksum := 65
+				ibanCZ := "CZ6508000000192000145399"
+				ibanCZchecksum := 1
 				Expect(iban.Checksum(ibanCZ)).To(Equal(ibanCZchecksum))
 			})
 
